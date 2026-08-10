@@ -33,6 +33,7 @@ ADV = 0.6                     # monospace advance, in em
 # ------------------------------------------------------------- animation ----
 INTRO = 3.2                   # plays once
 FADE_AT = 3.05                # intro -> loop crossfade
+HOLD = 0.05                   # t=0 frame shows the finished portrait; see below
 LOOP = 14.2
 INTRO_GROUPS = 60
 BANDS = 94
@@ -336,9 +337,18 @@ def build(mode, rng):
           % (d_of(segs), begin))
     A('</g>')
 
-    # loop: drift bands
-    A('<g fill="%s" opacity="0"><animate attributeName="opacity" values="0;1" '
-      'begin="%gs" dur="0.15s" fill="freeze"/>' % (p["portrait"], FADE_AT))
+    # Loop layer. The opacity *attribute* is 1 and the animation that hides it
+    # for the intro starts a beat late, at HOLD.
+    #
+    # That 50ms matters. Renderers that rasterise an SVG at animation time zero
+    # -- which is how <img>-embedded SVG behaves in several contexts, and <img>
+    # is exactly how GitHub renders a README banner -- take the attribute value.
+    # With this group starting at opacity="0" the portrait frame came out blank
+    # on the live profile page. Now t=0 is the finished portrait and the whole
+    # animation is an enhancement on top of a banner that is already correct.
+    A('<g fill="%s" opacity="1"><animate attributeName="opacity" values="0;0;1" '
+      'keyTimes="0;%.4f;1" dur="%gs" begin="%gs" fill="freeze"/>'
+      % (p["portrait"], (FADE_AT - HOLD) / (INTRO - HOLD), INTRO - HOLD, HOLD))
     for g in range(BANDS):
         idx = np.nonzero(band == g)[0]
         if not len(idx):
