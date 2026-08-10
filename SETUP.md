@@ -2,30 +2,32 @@
 
 Everything else is generated. These four need your account, so I could not do them.
 
-## 1. Let the snake Action write to the repo
+## 1. The snake — already working, nothing to do
 
-**Repo** Settings → Actions → General → Workflow permissions → **Read and write permissions** → Save.
+Both runs of `Generate contribution snake` went green on the first push and the
+`output` branch now holds `snake-dark.svg` and `snake-light.svg`. The README
+points at them and the workflow re-runs every 12 hours.
 
-This is *this repository's* settings, not your account settings — they look almost
-identical and the account-level one will not fix a failing workflow.
+If a future run ever fails at the push step, the fix is:
+**Repo** Settings → Actions → General → Workflow permissions → **Read and write
+permissions** → Save. That is *this repository's* settings, not your account
+settings — they look almost identical and the account-level one will not fix a
+failing workflow.
 
-Until this is set, `Generate contribution snake` fails at the push step.
+## 2. Self-host the stats cards — required, not optional
 
-## 2. Turn the snake on
+The stats and top-languages cards are commented out in `README.md`, because the
+shared public instance of github-readme-stats is currently **down**, not just
+busy:
 
-The workflow writes two SVGs to an `output` branch. That branch does not exist
-until the first run finishes, so the README ships with the snake block commented
-out — otherwise GitHub caches the 404 and the image stays broken for hours.
+```
+$ curl -s -o /dev/null -w '%{http_code}' https://github-readme-stats.vercel.app/api?username=AzarRaphiyev
+503     # "The deployment is currently unavailable — DEPLOYMENT_PAUSED"
+```
 
-After the Action shows green (Actions tab), delete the `<!--` / `-->` around the
-SNAKE block in `README.md` and commit.
-
-## 3. Self-host the stats cards
-
-`README.md` currently points at the shared public instance of
-github-readme-stats. Thousands of profiles hit it, so it regularly answers
-`API rate limit exceeded` and your cards render as an error box. Your own Vercel
-instance is free and has its own rate budget.
+Even when it is up, thousands of profiles share it and it regularly answers
+`API rate limit exceeded`. Your own Vercel instance is free and has its own rate
+budget. The streak card is a different service and works already.
 
 1. **Create a classic token** — Settings → Developer settings → Personal access
    tokens → **Tokens (classic)** → Generate new token (classic) → scope `repo`
@@ -43,14 +45,14 @@ instance is free and has its own rate budget.
    python tools/readme.py
    ```
 
-   and commit the regenerated `README.md`.
+   then uncomment the `STATS` block in the regenerated `README.md` and commit.
 
 `hide_rank=true` is deliberate: the rank grade is weighted by stars received,
 so an account whose work lives in coursework and client repos scores as though
 it had shipped nothing. The commit and contribution numbers are the honest part
 of that card.
 
-## 4. Regenerating the banner
+## 3. Regenerating the banner
 
 The SVGs are build output. The source of truth is `tools/` plus the `.npy` data
 in `tools/_data/`.

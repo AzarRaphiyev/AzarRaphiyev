@@ -14,6 +14,9 @@
   <img alt="GitHub streak" src="https://streak-stats.demolab.com?user=AzarRaphiyev&hide_border=true&border_radius=14&background=0A101F&stroke=1D2A42&ring=A78BFA&fire=10B981&currStreakNum=C8D6E8&sideNums=C8D6E8&currStreakLabel=22D3EE&sideLabels=22D3EE&dates=5A7290" width="100%" />
 </picture>
 
+<!-- STATS: uncomment once STATS_HOST in tools/readme.py points at your
+     own Vercel instance and you have re-run `python tools/readme.py`. -->
+<!--
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="https://github-readme-stats.vercel.app/api?username=AzarRaphiyev&hide_border=true&border_radius=14&bg_color=0A101F&title_color=22D3EE&text_color=C8D6E8&icon_color=A78BFA&show_icons=true&hide_rank=true" />
   <source media="(prefers-color-scheme: light)" srcset="https://github-readme-stats.vercel.app/api?username=AzarRaphiyev&hide_border=true&border_radius=14&bg_color=EEF2F9&title_color=0891B2&text_color=243449&icon_color=7C3AED&show_icons=true&hide_rank=true" />
@@ -24,19 +27,15 @@
   <source media="(prefers-color-scheme: light)" srcset="https://github-readme-stats.vercel.app/api/top-langs?username=AzarRaphiyev&hide_border=true&border_radius=14&bg_color=EEF2F9&title_color=0891B2&text_color=243449&icon_color=7C3AED&layout=compact&langs_count=8" />
   <img alt="Top languages" src="https://github-readme-stats.vercel.app/api/top-langs?username=AzarRaphiyev&hide_border=true&border_radius=14&bg_color=0A101F&title_color=22D3EE&text_color=C8D6E8&icon_color=A78BFA&layout=compact&langs_count=8" width="49%" />
 </picture>
+-->
 
 <br />
 
-<!-- SNAKE: uncomment after the first `Generate contribution snake` run
-     goes green. The `output` branch does not exist before then, so
-     these URLs 404 and GitHub caches the failure. -->
-<!--
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/AzarRaphiyev/AzarRaphiyev/output/snake-dark.svg" />
   <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/AzarRaphiyev/AzarRaphiyev/output/snake-light.svg" />
   <img alt="Contribution snake" src="https://raw.githubusercontent.com/AzarRaphiyev/AzarRaphiyev/output/snake-dark.svg" width="100%" />
 </picture>
--->
 
 <br />
 

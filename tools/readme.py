@@ -103,29 +103,38 @@ def build():
 
     # --- stats -------------------------------------------------------------
     out += [picture(streak_url(D), streak_url(L), "GitHub streak", width="100%"), ""]
-    # hide_rank=true: the rank is stars-weighted, so a newer account with real
-    # work in private/coursework repos gets scored as if it had done nothing.
-    out += [picture(stats_url(D, show_icons="true", hide_rank="true"),
-                    stats_url(L, show_icons="true", hide_rank="true"),
-                    "GitHub stats", width="49%")]
-    out += [picture(stats_url(D, path="api/top-langs", layout="compact", langs_count="8"),
-                    stats_url(L, path="api/top-langs", layout="compact", langs_count="8"),
-                    "Top languages", width="49%"), "", "<br />", ""]
 
-    # --- snake (uncomment once the Action has run green) --------------------
+    # The two github-readme-stats cards stay commented out until STATS_HOST
+    # points at a self-hosted fork. The shared public instance is not merely
+    # rate-limited -- as of this build it answers 503 DEPLOYMENT_PAUSED, so the
+    # cards render as broken-image alt text. See SETUP.md step 3.
+    #
+    # hide_rank=true: the rank is stars-weighted, so a newer account with real
+    # work in coursework and client repos gets scored as if it had shipped
+    # nothing. The contribution counts are the honest part of that card.
     out += [
-        "<!-- SNAKE: uncomment after the first `Generate contribution snake` run",
-        "     goes green. The `output` branch does not exist before then, so",
-        "     these URLs 404 and GitHub caches the failure. -->",
+        "<!-- STATS: uncomment once STATS_HOST in tools/readme.py points at your",
+        "     own Vercel instance and you have re-run `python tools/readme.py`. -->",
         "<!--",
-        picture("%s/output/snake-dark.svg" % RAW,
-                "%s/output/snake-light.svg" % RAW,
-                "Contribution snake", width="100%"),
+        picture(stats_url(D, show_icons="true", hide_rank="true"),
+                stats_url(L, show_icons="true", hide_rank="true"),
+                "GitHub stats", width="49%"),
+        picture(stats_url(D, path="api/top-langs", layout="compact", langs_count="8"),
+                stats_url(L, path="api/top-langs", layout="compact", langs_count="8"),
+                "Top languages", width="49%"),
         "-->",
         "",
         "<br />",
         "",
     ]
+
+    # --- snake --------------------------------------------------------------
+    # Live: the `output` branch exists and both SVGs return 200. Do not enable
+    # this before the Action has run green -- the branch does not exist until
+    # then, and GitHub caches the 404 for hours.
+    out += [picture("%s/output/snake-dark.svg" % RAW,
+                    "%s/output/snake-light.svg" % RAW,
+                    "Contribution snake", width="100%"), "", "<br />", ""]
 
     # --- badges ------------------------------------------------------------
     parts = [
