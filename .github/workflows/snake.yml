@@ -1,0 +1,36 @@
+name: Generate contribution snake
+
+on:
+  schedule:
+    - cron: "0 */12 * * *"
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      # The first colour in color_dots is the *empty* cell. On the dark snake it
+      # has to be a visible slate: against GitHub's #0d1117 a near-black empty
+      # cell disappears and the grid reads as broken rather than empty.
+      - name: Generate snake SVGs
+        uses: Platane/snk/svg-only@v3
+        with:
+          github_user_name: ${{ github.repository_owner }}
+          outputs: |
+            dist/snake-dark.svg?palette=github-dark&color_snake=%2322D3EE&color_dots=%232d3343,%233b2f63,%235b3fa8,%237c3aed,%23a78bfa
+            dist/snake-light.svg?color_snake=%230891B2&color_dots=%23e6ebf3,%23ddd0fb,%23c4a9f7,%239a6cf0,%237c3aed
+
+      - name: Push to the output branch
+        uses: crazy-max/ghaction-github-pages@v3.1.0
+        with:
+          target_branch: output
+          build_dir: dist
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
